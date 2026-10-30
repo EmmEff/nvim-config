@@ -1,67 +1,75 @@
 return {
-	{ "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
   {
-    'nvim-telescope/telescope.nvim', version = '*',
+    "nvim-telescope/telescope.nvim",
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      -- optional but recommended
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    }
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+    config = function()
+      local telescope = require("telescope")
+      telescope.setup({})
+      pcall(telescope.load_extension, "fzf")
+    end,
   },
   { "tpope/vim-fugitive" },
   {
-    'stevearc/aerial.nvim',
-    opts = {},
-    -- Optional dependencies
+    "stevearc/aerial.nvim",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons"
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {
+      on_attach = function(bufnr)
+        local map = vim.keymap.set
+        map("n", "<leader>j", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Aerial previous symbol" })
+        map("n", "<leader>k", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Aerial next symbol" })
+      end,
     },
   },
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
     build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter").install({ "rust", "go", "toml", "yaml", "terraform" })
+
+      -- The main branch no longer enables highlighting automatically.
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("UserTreesitter", { clear = true }),
+        callback = function(ev)
+          pcall(vim.treesitter.start, ev.buf)
+        end,
+      })
+    end,
   },
   { "neovim/nvim-lspconfig" },
   { "mfussenegger/nvim-lint" },
-  { "nvim-tree/nvim-tree.lua" },
---   {
---   "nvim-neo-tree/neo-tree.nvim",
---   branch = "v3.x",
---   dependencies = {
---     "nvim-lua/plenary.nvim",
---     "nvim-tree/nvim-web-devicons",
---     "MunifTanjim/nui.nvim",
---   },
--- },
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
+  },
   {
     "ray-x/go.nvim",
+    version = "v0.11",
     dependencies = {
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
       "ray-x/guihua.lua", -- required for treesitter main branch
     },
+    ft = { "go", "gomod" },
+    build = ":lua require('go.install').update_all_sync()",
     config = function()
-      -- Initialize the plugin
-      require("go").setup({
-        lsp_codelens = false, -- IMPORTANT
-      })
-  
-      -- Auto-format on save
-      local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+      require("go").setup()
 
       vim.api.nvim_create_autocmd("BufWritePre", {
+        group = vim.api.nvim_create_augroup("GoFormat", { clear = true }),
         pattern = "*.go",
         callback = function()
           require("go.format").goimports()
         end,
-        group = format_sync_grp,
       })
     end,
-    event = { "CmdlineEnter" },
-    ft = { "go", "gomod" },
-    build = ":lua require('go.install').update_all_sync()",
   },
   {
     "lewis6991/gitsigns.nvim",
@@ -69,7 +77,7 @@ return {
   },
   {
     "folke/trouble.nvim",
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    opts = {},
     cmd = "Trouble",
     keys = {
       {
