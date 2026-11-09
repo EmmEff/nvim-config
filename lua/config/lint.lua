@@ -3,6 +3,7 @@ local lint = require("lint")
 -- nvim-lint's built-in golangcilint linter handles both golangci-lint v1 and v2.
 lint.linters_by_ft = {
   go = { "golangcilint" },
+  rust = { "clippy" },
 }
 
 vim.api.nvim_create_autocmd("BufWritePost", {
