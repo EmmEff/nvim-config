@@ -41,6 +41,15 @@ vim.lsp.config("rust_analyzer", {
 })
 vim.lsp.enable("rust_analyzer")
 
+-- Format Rust files on save via rust-analyzer (rustfmt).
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("UserRustFormat", { clear = true }),
+  pattern = "*.rs",
+  callback = function(ev)
+    vim.lsp.buf.format({ bufnr = ev.buf, async = false })
+  end,
+})
+
 -- Requires `yaml-language-server`.
 vim.lsp.enable("yamlls")
 
