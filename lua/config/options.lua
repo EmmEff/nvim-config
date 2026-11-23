@@ -24,13 +24,13 @@ local ft_opts = {
   yaml = { shiftwidth = 2, softtabstop = 2, expandtab = true },
   jsonnet = { shiftwidth = 2, softtabstop = 2, expandtab = true },
   c = { shiftwidth = 3, tabstop = 3, expandtab = false },
-  go = { shiftwidth = 4, tabstop = 4, expandtab = false, colorcolumn = "80,120" },
+  go = { shiftwidth = 4, tabstop = 4, expandtab = false, colorcolumn = "80,120", number = true },
   markdown = { shiftwidth = 4, tabstop = 4, expandtab = true },
   json = { shiftwidth = 4, tabstop = 4, expandtab = true },
   html = { shiftwidth = 2, tabstop = 2, expandtab = true },
   javascript = { shiftwidth = 2, tabstop = 2, expandtab = true },
   sh = { shiftwidth = 4, tabstop = 4, expandtab = true },
-  rust = { shiftwidth = 4, tabstop = 4, colorcolumn = "80,99" },
+  rust = { shiftwidth = 4, tabstop = 4, colorcolumn = "80,99", number = true },
 }
 
 vim.api.nvim_create_autocmd("FileType", {
