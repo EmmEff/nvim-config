@@ -16,6 +16,7 @@ opt.scrolloff = 8
 opt.updatetime = 250
 opt.splitright = true
 opt.splitbelow = true
+opt.mouse = "" -- disable mouse support
 
 vim.cmd.colorscheme("blue")
 
