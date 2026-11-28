@@ -28,6 +28,7 @@ local ft_opts = {
   go = { shiftwidth = 4, tabstop = 4, expandtab = false, colorcolumn = "80,120", number = true },
   markdown = { shiftwidth = 4, tabstop = 4, expandtab = true },
   json = { shiftwidth = 4, tabstop = 4, expandtab = true },
+  jsonc = { shiftwidth = 4, tabstop = 4, expandtab = true },
   html = { shiftwidth = 2, tabstop = 2, expandtab = true },
   javascript = { shiftwidth = 2, tabstop = 2, expandtab = true },
   sh = { shiftwidth = 4, tabstop = 4, expandtab = true },
